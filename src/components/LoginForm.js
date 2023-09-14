@@ -7,6 +7,7 @@ const cookie = new Cookies();
 function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    // const [token, setToken] = useState(null);
 
     const Login = async () => {
         try {
@@ -14,9 +15,8 @@ function LoginForm() {
                 email: email,
                 password: password
             });
-            cookie.set('Token', response.data.token, {
-                path: '/'
-            });
+           localStorage.setItem('token', response.data.data.token);
+        //    setToken(response.data.data.token);
         } catch (error) {
             console.log('error: ', error);
             
@@ -35,6 +35,7 @@ function LoginForm() {
                         id="email"
                         className="form__input"
                         placeholder="Email"
+                        required
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
@@ -47,6 +48,7 @@ function LoginForm() {
                         type="password"
                         id="password"
                         placeholder="Password"
+                        required
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
