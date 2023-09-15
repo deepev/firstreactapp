@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 
 axios.interceptors.response.use(null, (error) => {
     console.log('error: ', error);

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import HttpService from '../util/HttpService';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 const SignUp = () => {
     const [name, setName] = useState('');
@@ -10,11 +11,16 @@ const SignUp = () => {
     const Register = async () => {
         // e.preventDefault();
         try {
-            await HttpService.post('http://localhost:8000/api/user/register', {
+            const response = await HttpService.post('http://localhost:8000/api/user/register', {
                 name: name,
                 email: email,
                 password: password,
             });
+            if (response.status == 200) {
+               toast.success('User register successfully');
+            } else {
+                toast.error('something went wrong');
+            }
         } catch (error) {
             console.log('error: ', error);
         }
@@ -29,7 +35,7 @@ const SignUp = () => {
     });
 
     return (
-        <form onSubmit={handleSubmit(() => Register())}>
+        <form onSubmit={handleSubmit( () => Register())}>
             <h3>Sign Up</h3>
             <div className="mb-3">
                 <label>Name: {''}</label>

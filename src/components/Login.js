@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import HttpService from '../util/HttpService';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
@@ -20,8 +21,9 @@ const SignIn = () => {
                 },
             );
             localStorage.setItem('token', response.data.data.token);
-            console.log('response.data: ', response.data);
-            return response.data;
+            if(response.status == 200) {
+                toast.success('Login successfully');
+            }
         } catch (error) {
             console.log('error: ', error);
         }

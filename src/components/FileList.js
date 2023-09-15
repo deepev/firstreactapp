@@ -1,12 +1,22 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 const FileList = () => {
     const [fileNames, setFileNames] = useState([]);
+    const base_url = 'http://localhost:8000/api';
+    const access_token = localStorage.getItem('token');
 
     useEffect(() => {
         axios
-            .get('http://localhost:8000/api/file/list')
+            .get(`${base_url}/file/list`, {
+                headers: {
+                    Authorization: `${access_token}`,
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            })
             .then(({ data }) => {
                 setFileNames(data);
             })
@@ -17,10 +27,18 @@ const FileList = () => {
     
 
     const FileTable = () => {
-        return fileNames.map((file, index) => {
-            <tr key={file.id}>
+        return fileNames?.data?.map((file, index) => {
+            return <tr key={file.id}>
                 <td>{index + 1}</td>
                 <td>{file.name}</td>
+                <td>
+                    <Link to={`/file/get/${file._id}`} className='btn btn-sm btn-info'>
+                        View
+                    </Link>
+                    <Link to={`/file/remove/${file._id}`} className='btn btn-sm btn-danger'>
+                        Delete
+                    </Link>
+                </td>
             </tr>;
         });
     };

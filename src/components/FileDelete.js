@@ -1,34 +1,39 @@
 import axios from 'axios';
-import React from 'react';
-import { Button } from 'bootstrap';
+import React, { useEffect } from 'react';
+import toast from 'react-hot-toast';
+import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const FileDelete = (props) => {
-    const { _id, name } = props.obj;
-
+const FileDelete = () => {
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const access_token = localStorage.getItem('token');
     const FileDelete = async () => {
         try {
             const response = await axios.delete(
-                `http://localhost:4000/api/file/get/${_id}`,
+                `http://localhost:8000/api/file/get/${id}`,
+                {
+                    headers: {
+                        Authorization: `${access_token}`,
+                        'Content-Type': 'application/json'
+                    }
+                }
             );
             if (response.status == 200) {
-                alert('File Deleted Successfully');
-                window.location.reload();
+                toast.success('File Deleted Successfully');
+                return navigate('/file-list')
             }
-            throw new Error('Something Went Wrong');
         } catch (error) {
             console.log('error: ', error);
         }
     };
-
+    useEffect(() => {
+        FileDelete()
+    }, [])
     return (
-        <tr>
-            <td>{name}</td>
-            <td>
-                <Button onClick={FileDelete} size="sm" variant="danger">
-                    Delete
-                </Button>
-            </td>
-        </tr>
+        <div>
+            <p>File deleted successfully</p>
+        </div>
     );
 };
 

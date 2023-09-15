@@ -64,27 +64,19 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; 
+import { Toaster } from 'react-hot-toast';
 import FileUpload from './components/FileUpload';
-import LoginForm from './components/LoginForm';
+import FileList from './components/FileList';
+import GetFile from './components/GetFile';
+import FileDelete from './components/FileDelete';
 
 function App() {
     return (
-        <ToastContainer 
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="dark" />,
         <Router>
             <div className="App">
                 <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+                <Toaster position='top-right' reverseOrder={false}/>
+
                     <div className="container">
                         <Link className="navbar-brand" to={'/sign-in'}>
                             React
@@ -104,6 +96,16 @@ function App() {
                                         Register
                                     </Link>
                                 </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to={'/profile'}>
+                                        Upload
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to={'/file-list'}>
+                                        File List
+                                    </Link>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -115,6 +117,9 @@ function App() {
                             <Route path="/sign-in" element={<Login />} />
                             <Route path="/sign-up" element={<SignUp />} />
                             <Route path='/profile' element={<FileUpload />} />
+                            <Route path='/file-list' element={<FileList />} />
+                            <Route path='/file/get/:id' element={<GetFile />} />
+                            <Route path='/file/remove/:id' element={<FileDelete />} />
                         </Routes>
                     </div>
                 </div>
