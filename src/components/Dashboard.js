@@ -22,7 +22,7 @@ import LoginForm from './LoginForm';
 //             setEmail(decoded.email);
 //         } catch (error) {
 //             console.log('error: ', error);
-            
+
 //         }
 //     }
 //     const axiosJWT = axios.create();
@@ -74,7 +74,7 @@ import LoginForm from './LoginForm';
 //                             <td>{user.email}</td>
 //                         </tr>
 //                     ))}
- 
+
 //                 </tbody>
 //             </table> */}
 //         </div>

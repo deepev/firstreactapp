@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import './style.css';
 import axios from 'axios';
-import Cookies from 'universal-cookie';
-const cookie = new Cookies();
+
 
 function LoginForm() {
     const [email, setEmail] = useState('');

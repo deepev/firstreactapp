@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { useForm } from 'react-hook-form';
 
 const FileUpload = () => {
     const [fileName, setFileName] = useState('');
@@ -14,6 +15,8 @@ const FileUpload = () => {
             setFileName(e.target.files[0].name);
         }
     };
+
+    const { reset } = useForm();
 
     const access_token = localStorage.getItem('token');
     const uploadFile = async () => {
@@ -52,6 +55,7 @@ const FileUpload = () => {
             if (response.status == 200) {
                 toast.success('Your file upload successfully');
             }
+            reset();
         } catch (error) {
             console.log('error: ', error);
         }

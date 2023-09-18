@@ -6,9 +6,6 @@ axios.interceptors.response.use(null, (error) => {
     toast.remove()
     const expectedError =
         error.response && error.response.status >= 400 && error.response.status < 500;
-        
-        console.log(' error.response >= 400: ',  error.response >= 400);
-        console.log(' error.response : ',  error.response );
 
     if (expectedError) {
         console.log('Logging the error', error);
