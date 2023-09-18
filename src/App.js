@@ -20,7 +20,7 @@
 //         { path: '/profile', element: <FileUpload /> },
 //         { path: '/file-list', element: <FileList /> },
 //         { path: '/file/:id', element: <GetFile /> },
-//         { path: '/file/delete', element: <FileDelete /> },
+//         { path: '/file/delete', element:  /> },
 //     ]);
 //     return element;
 // }

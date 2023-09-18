@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import HttpService from '../util/HttpService';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { registerSchema } from '../schema/auth';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const SignUp = () => {
     const [name, setName] = useState('');
@@ -21,17 +23,19 @@ const SignUp = () => {
             } else {
                 toast.error('something went wrong');
             }
+            reset()
         } catch (error) {
             console.log('error: ', error);
         }
     };
 
-    const { register, handleSubmit, formState: { errors }} = useForm({
+    const { register, handleSubmit, reset, formState: { errors }} = useForm({
         defaultValues: {
             name: '',
             email: '',
             password: ''
-        }
+        },
+        resolver: yupResolver(registerSchema)
     });
 
     return (
@@ -44,12 +48,7 @@ const SignUp = () => {
                     id="name"
                     className="form-control"
                     placeholder="Enter name"
-                    {...register('name', {
-                        required: {
-                            value: true,
-                            message: 'Name is required'
-                        }
-                    })}
+                    { ...register('name') }
                     onChange={(e) => setName(e.target.value)}
                 />
                 <p>{errors.name?.message}</p>
@@ -61,12 +60,7 @@ const SignUp = () => {
                     id="email"
                     className="form-control"
                     placeholder="Enter email"
-                    {...register('email', {
-                        required: {
-                            value: true,
-                            message: 'Email is required'
-                        }
-                    })}
+                    { ...register('email') }
                     onChange={(e) => setEmail(e.target.value)}
                 />
                 <p>{errors.email?.message}</p>
@@ -78,12 +72,7 @@ const SignUp = () => {
                     type="password"
                     className="form-control"
                     placeholder="Enter password"
-                    {...register('password', {
-                        required: {
-                            value: true,
-                            message: 'Password is required'
-                        }
-                    })}
+                    { ...register('password') }
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <p>{errors.password?.message}</p>

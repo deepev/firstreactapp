@@ -8,7 +8,7 @@ const FileDelete = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const access_token = localStorage.getItem('token');
-    const FileDelete = async () => {
+    const DeleteFile = async () => {
         try {
             const response = await axios.delete(
                 `http://localhost:8000/api/file/get/${id}`,
@@ -21,15 +21,12 @@ const FileDelete = () => {
             );
             if (response.status == 200) {
                 toast.success('File Deleted Successfully');
-                return navigate('/file-list')
+                // return navigate('/file-list')
             }
         } catch (error) {
             console.log('error: ', error);
         }
     };
-    useEffect(() => {
-        FileDelete()
-    }, [])
     return (
         <div>
             <p>File deleted successfully</p>

@@ -2,10 +2,25 @@ import React, { useState } from 'react';
 import HttpService from '../util/HttpService';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { loginSchema } from '../schema/auth';
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm({
+        defaultValues: {
+            email: '',
+            password: '',
+        },
+        resolver: yupResolver(loginSchema)
+    });
 
     const Login = async () => {
         try {
@@ -24,21 +39,11 @@ const SignIn = () => {
             if(response.status == 200) {
                 toast.success('Login successfully');
             }
+            reset()
         } catch (error) {
             console.log('error: ', error);
         }
     };
-
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm({
-        defaultValues: {
-            email: '',
-            password: '',
-        },
-    });
 
     return (
         <form onSubmit={handleSubmit(() => Login())}>
@@ -48,12 +53,7 @@ const SignIn = () => {
                 <input
                     type="email"
                     id="email"
-                    {...register('email', {
-                        required: {
-                            value: true,
-                            message: 'Email is required',
-                        },
-                    })}
+                    { ...register('email') }
                     className="form-control"
                     placeholder="Enter email"
                     onChange={(e) => setEmail(e.target.value)}
@@ -67,12 +67,7 @@ const SignIn = () => {
                     type="password"
                     className="form-control"
                     placeholder="Enter password"
-                    {...register('password', {
-                        required: {
-                            value: true,
-                            message: 'Password is required',
-                        },
-                    })}
+                    { ...register('password') }
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <p>{errors.password?.message}</p>
