@@ -71,6 +71,9 @@ import GetFile from './components/GetFile';
 import FileDelete from './components/FileDelete';
 
 function App() {
+
+    const access_token = localStorage.getItem('token');
+    
     return (
         <Router>
             <div className="App">
@@ -86,7 +89,7 @@ function App() {
                             id="navbarTogglerDemo02"
                         >
                             <ul className="navbar-nav ml-auto">
-                                <li className="nav-item">
+                                {/* <li className="nav-item">
                                     <Link className="nav-link" to={'/sign-in'}>
                                         Login
                                     </Link>
@@ -105,7 +108,37 @@ function App() {
                                     <Link className="nav-link" to={'/file-list'}>
                                         File List
                                     </Link>
-                                </li>
+                                </li> */}
+                                {
+                                    access_token ? (
+                                        <>
+                                            <li className="nav-item">
+                                                <Link className="nav-link" to={'/upload'}>
+                                                    Upload
+                                                </Link>
+                                            </li>
+                                            <li className="nav-item">
+                                                <Link className="nav-link" to={'/file-list'}>
+                                                    File List
+                                                </Link>
+                                            </li>
+                                            
+                                        </>
+                                    ) : (
+                                        <>
+                                            <li className="nav-item">
+                                                <Link className="nav-link" to={'/sign-up'}>
+                                                    Register
+                                                </Link>
+                                            </li>
+                                            <li className="nav-item">
+                                                <Link className="nav-link" to={'/sign-in'}>
+                                                    Login
+                                                </Link>
+                                            </li>
+                                        </>
+                                    )
+                                }
                             </ul>
                         </div>
                     </div>
@@ -116,10 +149,9 @@ function App() {
                             <Route exact path="/" element={<Login />} />
                             <Route path="/sign-in" element={<Login />} />
                             <Route path="/sign-up" element={<SignUp />} />
-                            <Route path='/profile' element={<FileUpload />} />
+                            <Route path='/upload' element={<FileUpload />} />
                             <Route path='/file-list' element={<FileList />} />
                             <Route path='/file/get/:id' element={<GetFile />} />
-                            <Route path='/file/remove/:id' element={<FileDelete />} />
                         </Routes>
                     </div>
                 </div>

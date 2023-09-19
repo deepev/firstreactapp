@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import useDebounce from '../hooks/useDebounce';
+import { FaTrash } from 'react-icons/fa';
 
 // const debounce = (func, wait) => {
 //     let timeout;
@@ -98,7 +99,8 @@ const FileList = () => {
                             }
                         }
                     ).then(() => {
-                        Swal.fire('Your file has been deleted successfully!')
+                        // Swal.fire('Your file has been deleted successfully!')
+                        toast.success('File deleted successfully')
                         fileData();
                     });
                 } else {
@@ -128,16 +130,21 @@ const FileList = () => {
         return fileNames?.data?.map((file, index) => {
             return <tr key={file.id}>
                 <td>{index + 1}</td>
-                <td>{file.name}</td>
+                <td>{file.originalName}</td>
                 <td>
                     <Link to={`/file/get/${file._id}`} className='btn btn-sm btn-info'>
-                        View
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="none" d="M0 0h24v24H0z">
+                            </path>
+                            <path fill="#02A2FF" d="M12 3c5.392 0 9.878 3.88 10.819 9-.94 5.12-5.427 9-10.819 9-5.392 0-9.878-3.88-10.819-9C2.121 6.88 6.608 3 12 3zm0 16a9.005 9.005 0 0 0 8.777-7 9.005 9.005 0 0 0-17.554 0A9.005 9.005 0 0 0 12 19zm0-2.5a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9zm0-2a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z">
+                            </path>
+                        </svg>
                     </Link>
                     {/* <Link to={`/file/remove/${file._id}`} className='btn btn-sm btn-danger'>
                         Delete
                     </Link> */}
-                    <button type="submit" className="btn btn-danger" onClick={ () => DeleteFile(file._id) }>
-                        Delete
+                    <button type="submit" className="btn btn-sm btn-danger" style={{ margin: '5px' }} onClick={ () => DeleteFile(file._id) }>
+                        <FaTrash/>
                     </button>
                 </td>
             </tr>;

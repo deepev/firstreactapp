@@ -4,11 +4,13 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema } from '../schema/auth';
+import { useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -38,6 +40,7 @@ const SignIn = () => {
             localStorage.setItem('token', response.data.data.token);
             if(response.status == 200) {
                 toast.success('Login successfully');
+                return navigate('/file-list')
             }
             reset()
         } catch (error) {
@@ -82,6 +85,7 @@ const SignIn = () => {
                     <label
                         className="custom-control-label"
                         htmlFor="customCheck1"
+                        style={{ padding: "5"}}
                     >
                         Remember me
                     </label>
