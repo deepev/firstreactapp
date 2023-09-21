@@ -68,7 +68,7 @@ import { Toaster } from 'react-hot-toast';
 import FileUpload from './components/FileUpload';
 import FileList from './components/FileList';
 import GetFile from './components/GetFile';
-import FileDelete from './components/FileDelete';
+import TodoList from './components/TodoList ';
 
 function App() {
 
@@ -139,6 +139,11 @@ function App() {
                                         </>
                                     )
                                 }
+                                <li className="nav-item">
+                                    <Link className="nav-link" to={'/todo-list'}>
+                                        Todo List
+                                    </Link>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -152,6 +157,7 @@ function App() {
                             <Route path='/upload' element={<FileUpload />} />
                             <Route path='/file-list' element={<FileList />} />
                             <Route path='/file/get/:id' element={<GetFile />} />
+                            <Route path='/todo-list' element={<TodoList />} />
                         </Routes>
                     </div>
                 </div>
