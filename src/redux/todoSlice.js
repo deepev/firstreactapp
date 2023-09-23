@@ -25,7 +25,7 @@ export const addTodoAsync = createAsyncThunk(
             body: JSON.stringify({ title: payload.title }),
         });
 
-        console.log('resp: ', resp); 
+        console.log('resp: ', resp);
         if (resp.ok) {
             const todo = await resp.json();
             return { todo };
@@ -70,7 +70,6 @@ export const todoSlice = createSlice({
     initialState: [],
 
     reducers: {
-
         addTodo: (state = [], action) => {
             console.log('state: ', state);
             const todo = {
@@ -95,9 +94,9 @@ export const todoSlice = createSlice({
     },
 
     extraReducers: {
-
         [getTodosAsync.fulfilled]: (state, action) => {
-            return action.payload.todos;
+            console.log('get todo', state, action);
+            return action.payload?.todos?.data || [];
         },
 
         [addTodoAsync.fulfilled]: (state, action) => {

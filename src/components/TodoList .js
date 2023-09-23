@@ -63,14 +63,18 @@ const TodoList = () => {
     }, [dispatch]);
 
     return (
-        <ul className="list-group" >
-            {todos?.data?.map((todo) => (
-                <TodoItem
-                    id={todo.id}
-                    title={todo.title}
-                    completed={todo.completed}
-                />
-            ))}
+        <ul className="list-group">
+            {todos.length > 0 ? (
+                todos?.map((todo) => (
+                    <TodoItem
+                        id={todo.id}
+                        title={todo.title}
+                        completed={todo.completed}
+                    />
+                ))
+            ) : (
+                <p>No task found</p>
+            )}
         </ul>
     );
 };

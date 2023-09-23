@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import HttpService from '../util/HttpService';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -21,8 +21,14 @@ const SignIn = () => {
             email: '',
             password: '',
         },
-        resolver: yupResolver(loginSchema)
+        resolver: yupResolver(loginSchema),
     });
+
+    useEffect(() => {
+        // Get user from local storage
+        // If yes, redirect to home
+        // Else login
+    }, []);
 
     const Login = async () => {
         try {
@@ -38,11 +44,11 @@ const SignIn = () => {
                 },
             );
             localStorage.setItem('token', response.data.data.token);
-            if(response.status == 200) {
+            if (response.status == 200) {
                 toast.success('Login successfully');
-                return navigate('/file-list')
+                return navigate('/file-list');
             }
-            reset()
+            reset();
         } catch (error) {
             console.log('error: ', error);
         }
@@ -56,7 +62,7 @@ const SignIn = () => {
                 <input
                     type="email"
                     id="email"
-                    { ...register('email') }
+                    {...register('email')}
                     className="form-control"
                     placeholder="Enter email"
                     onChange={(e) => setEmail(e.target.value)}
@@ -70,7 +76,7 @@ const SignIn = () => {
                     type="password"
                     className="form-control"
                     placeholder="Enter password"
-                    { ...register('password') }
+                    {...register('password')}
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <p>{errors.password?.message}</p>
@@ -85,7 +91,7 @@ const SignIn = () => {
                     <label
                         className="custom-control-label"
                         htmlFor="customCheck1"
-                        style={{ padding: "5"}}
+                        style={{ padding: '5' }}
                     >
                         Remember me
                     </label>
